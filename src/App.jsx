@@ -5,17 +5,8 @@ import './App.css'
 import Profile from './components/profile.func'
 
 function App() {
-
-    const person = {
-        name:'Basharat Ali',
-        qualification:'Bs. I.T',
-        university:'University of the Punjab',
-        designation:'Software Engineer',
-        skills: 'NodeJS, ReactJS, MySQL'
-    }
   return (
     <>
-        <Profile person={person}></Profile>
     </>
   )
 }
