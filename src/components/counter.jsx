@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ChildFunc from "./child.func";
+import ChildClass from "./child.class";
 
 const Counter = ({}) => {
     const [count, setCount] = useState(0);
@@ -13,6 +15,8 @@ const Counter = ({}) => {
             <button onClick={increment}>+</button>
             <p>{count}</p>
             <button onClick={decrement}>-</button>
+            {/* <ChildFunc count={count}></ChildFunc> */}
+            {/* <ChildClass count={count}></ChildClass> */}
         </>
     )
 }
