@@ -22,25 +22,12 @@ button {
     color: white;
     transition: background-color 0.5 ease;
   }
-  .add-button {
+  .btn {
       background-color: rgb(13, 71, 1);
   }
-  .add-button:hover {
+  .btn:hover {
     background-color: rgb(43, 216, 8);
   }
-  .delete-button {
-      background-color: rgb(110, 3, 9);
-  }
-  .delete-button:hover {
-    background-color: rgb(212, 14, 24);
-  }
-  .move-button {
-      background-color: rgb(3, 28, 110);
-  }
-  .move-button:hover {
-    background-color: rgb(9, 60, 226);
-  }
-
   input[type="text"]{
     font-size: 1.6rem;
     padding: 10px;
@@ -66,7 +53,7 @@ button {
   .text{
     flex: 1;
   }
-  .delete-button, .move-button{
+  .btn{
     padding: 8px 12px;
     font-size: 1.4rem;
     margin-left: 10px;
