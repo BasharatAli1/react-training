@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import './App.css'
-import TodoList from './components/todo.list'
+import Controlled from './components/Controlled'
+import UnControlled from './components/UnControlled'
 
 function App() {
 
   return (
     <>
-        <TodoList />
+        <Controlled />
+        <UnControlled />
     </>
   )
 }
