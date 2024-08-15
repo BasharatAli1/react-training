@@ -1,60 +1,49 @@
-.to-do-list{
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    /* margin-top: 100px; */
-    /* width: 80%; */
-    border: 2px solid black; 
+*{
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #1d1d20;
+    background-image: url(./images/React.webp);
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: 50%;
+}
+nav {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    height: 90px;
+    padding: 30px 25px;
+}
+nav > h3, nav > h4 {
+    margin-right: 0;
+}
+nav > h3 {
+    margin-right: auto;
+    margin-left: 4px;
+    font-weight: 700;
+    font-size: 25px;
+    color: #61DAFB;
+}
+nav > h4 {
+    color: white;
 }
 h1{
     font-size: 4rem;
 }
-button {
-    border-radius: 5px;
-    border: none;
-    padding: 0.6em 1.2em;
-    padding: 10px 20px;
-    font-size: 1.7rem;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
+.main{
+    padding: 57px 27px;
     color: white;
-    transition: background-color 0.5 ease;
-  }
-  .btn {
-      background-color: rgb(13, 71, 1);
-  }
-  .btn:hover {
-    background-color: rgb(43, 216, 8);
-  }
-  input[type="text"]{
-    font-size: 1.6rem;
-    padding: 10px;
-    border: 2px solid rgba(70, 53, 53, 0.404); 
-    border-radius: 5px;
-    color: black;
-  }
-  ol{
-    padding: 0;
-  }
-  li{
-    font-size: 2rem;
-    font-weight: bold;
-    padding: 15px;
-    background-color: aliceblue;
-    margin-bottom: 10px;
-    border: 3px solid rgba(219, 215, 215, 0.671);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
+}
 
-  }
-  .text{
-    flex: 1;
-  }
-  .btn{
-    padding: 8px 12px;
+.main > div > ul > li {
+    line-height: 25px;
+}
+
+.main > div > ul > li::marker {
+    color: #61DAFB;
     font-size: 1.4rem;
-    margin-left: 10px;
-  }
+}
