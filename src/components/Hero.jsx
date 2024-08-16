@@ -1,10 +1,12 @@
 import React from 'react'
+import heroImg from '../images/hero.png'
 
-const Main = () => {
+const Hero = () => {
   return (
     <>
-        <div className='main'>
-            <div>
+        <div className='hero'>
+            <img src={heroImg} alt="Hero Img" className='bnb-logo'/>
+            {/* <div>
                 <h1>Fun facts about React</h1>
             </div>
             <div>
@@ -14,10 +16,10 @@ const Main = () => {
                     <li>Has well over 100K stars on GitHub</li>
                     <li>Is maintained by Facebook</li>
                 </ul>
-            </div>
+            </div> */}
         </div>
     </>
   )
 }
 
-export default Main
+export default Hero
