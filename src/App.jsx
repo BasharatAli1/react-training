@@ -1,12 +1,17 @@
+import { RouterProvider } from 'react-router-dom';
 import './App.css'
-
-function App() {
-
-  return (
-    <>
-
-    </>
-  )
+import router from './components/router';
+  
+if (import.meta.hot) {
+    import.meta.hot.dispose(() => router.dispose());
 }
 
-export default App
+function App() {
+    return(
+        <>
+            <RouterProvider router={router} />;
+        </>
+    )
+  }
+  
+  export default App
