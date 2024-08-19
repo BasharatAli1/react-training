@@ -20,7 +20,7 @@ const App = () => {
         </>
     ) : (
         <>
-            <RouterProvider router={router} />;
+            <RouterProvider router={router} />
             <div>FLAG: {!loginSuccess ? 'False': 'True'}</div>
         </>
     )

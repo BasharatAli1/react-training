@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
 
 const Login = (props) => {
     const [email, setEmail] = useState("");
