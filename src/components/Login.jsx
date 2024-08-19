@@ -66,7 +66,7 @@ const Login = (props) => {
             } else {
                 props.handleLoginResponse(false)
                 setResponseMessage(`Login failed: ${data.message.message}`);
-                console.log(data.message.message);
+                console.log('Login Message:', data.message.message);
                 // handle error
             }
         } catch (error) {
