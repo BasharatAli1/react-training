@@ -1,13 +1,17 @@
-
 import React, { useEffect, useState } from 'react'
+import Clinics from './clinics';
 
-const Patient = () => {
-    const [patients, setPatients] = useState([{}]);
+const ClinicListing = () => {
+    const [clinics, setClinics] = useState([{}]);
     const [loading, setLoading] = useState(true);
-    const getPatients = () => {
-        const url = 'http://127.0.0.0:3001/api/patients/list';
+    const getClinics = () => {
+        const url = 'http://127.0.0.0:3001/api/clinics/list';
         const requestBody = {
             filters: {
+                isNhsEnabled: null,
+                invoiceable: null,
+                startDate: "2024-08-01",
+                endDate: "2024-08-31",
                 query: ""
             },
             pagination: {
@@ -28,7 +32,7 @@ const Patient = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setPatients(result.data.rows);
+                        setClinics(result.data.rows);
                         return ;
                     }
                 })
@@ -38,21 +42,19 @@ const Patient = () => {
             console.log('333', error.message);
             // handle network error
         }
-    };
+    }
     useEffect(() => {
-        getPatients();
-    }, []);
+        getClinics();
+    }, [])
+    console.log("Index - Clinic Listing");
   return (
     <>
-        <div>Patient</div>
+            <div>Index - Clinic Listing</div>
         {
-            loading ? <div>Loading</div> : patients.length &&
-            patients.map((patient)=> 
-                <div index={patient.name}>{patient.name} {patient.surname}</div>
-            )
+            loading ? <h2>Loading</h2> : <Clinics clinics={clinics} />
         }
     </>
   )
 }
 
-export default Patient
+export default ClinicListing

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 const Login = (props) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("basharat@camp1.tkxel.com");
+    const [password, setPassword] = useState("Tkxel123");
     const [deviceToken, setDeviceToken] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [errors, setError] = useState({
