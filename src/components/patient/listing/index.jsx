@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Patients from './patients';
+import { useDispatch } from 'react-redux';
+import { setPatientList } from '../../../slices/patient';
 
 const PatientListing = () => {
-    const [patients, setPatients] = useState([{}]);
     const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
     const getPatients = () => {
         const url = 'http://127.0.0.0:3001/api/patients/list';
         const requestBody = {
@@ -28,7 +30,7 @@ const PatientListing = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setPatients(result.data.rows);
+                        dispatch(setPatientList(result?.data?.rows || []));
                         return ;
                     }
                 })
@@ -47,7 +49,7 @@ const PatientListing = () => {
     <>
             <div>Index - Patient Listing</div>
         {
-            loading ? <h2>Loading</h2> : <Patients patients={patients} />
+            loading ? <h2>Loading</h2> : <Patients />
         }
     </>
   )

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import PatientDetail from '../details/patientDetail'
+import { useSelector } from 'react-redux';
 
 const Patients = ({ patients }) => {
+    const patientList = useSelector(state => state.patients.patientList);
     console.log("Patient Listing");
     
   return (
     <>
-            <div>Patient Listing</div>
+        <div>Patient Listing</div>
         {
-            patients.map((patient)=> 
+            patientList.map((patient)=> 
                 <PatientDetail patient={patient} key={patient.id} showLink={true} />
             )
         }

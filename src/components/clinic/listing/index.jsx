@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Clinics from './clinics';
+import { useDispatch } from 'react-redux';
+import { setClinicList } from '../../../slices/clinic';
 
 const ClinicListing = () => {
-    const [clinics, setClinics] = useState([{}]);
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     const getClinics = () => {
         const url = 'http://127.0.0.0:3001/api/clinics/list';
@@ -32,7 +34,7 @@ const ClinicListing = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setClinics(result.data.rows);
+                        dispatch(setClinicList(result?.data?.rows || []));
                         return ;
                     }
                 })
@@ -51,7 +53,7 @@ const ClinicListing = () => {
     <>
             <div>Index - Clinic Listing</div>
         {
-            loading ? <h2>Loading</h2> : <Clinics clinics={clinics} />
+            loading ? <h2>Loading</h2> : <Clinics />
         }
     </>
   )
