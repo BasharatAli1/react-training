@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import Clinics from './clinics';
+import { useDispatch } from 'react-redux';
+import { setClinicList } from '../../../slices/clinic';
 
-const Order = () => {
-    const [orders, setOrders] = useState([{}]);
+const ClinicListing = () => {
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const getorders = () => {
-        const url = 'http://127.0.0.0:3001/api/orders/list';
+    const getClinics = () => {
+        const url = 'http://127.0.0.0:3001/api/clinics/list';
         const requestBody = {
             filters: {
-                clinicId :  null,
-                isPublished :  null,
-                patientId :  null,
-                query :  "",
-                refunded :  null,
-                status :  "",
-                waitingForPrescription :  null
+                isNhsEnabled: null,
+                invoiceable: null,
+                startDate: "2024-08-01",
+                endDate: "2024-08-31",
+                query: ""
             },
             pagination: {
                 page: 1,
@@ -33,7 +34,7 @@ const Order = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setOrders(result.data.rows);
+                        dispatch(setClinicList(result?.data?.rows || []));
                         return ;
                     }
                 })
@@ -43,21 +44,19 @@ const Order = () => {
             console.log('333', error.message);
             // handle network error
         }
-    };
+    }
     useEffect(() => {
-        getorders();
-    }, []);
-    return (
-        <>
-            <div>Order</div>
-            {
-                loading ? <div>Loading</div> : orders.length &&
-                orders.map((order)=> 
-                    <div index={order.id}>{order.id}</div>
-                )
-            }
-        </>
-    )
+        getClinics();
+    }, [])
+    console.log("Index - Clinic Listing");
+  return (
+    <>
+            <div>Index - Clinic Listing</div>
+        {
+            loading ? <h2>Loading</h2> : <Clinics />
+        }
+    </>
+  )
 }
 
-export default Order
+export default ClinicListing

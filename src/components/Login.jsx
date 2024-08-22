@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { setAccessToken } from '../utils/helper';
 
 const Login = (props) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("basharat@camp1.tkxel.com");
+    const [password, setPassword] = useState("Tkxel123");
     const [deviceToken, setDeviceToken] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [errors, setError] = useState({
@@ -39,7 +40,7 @@ const Login = (props) => {
             handleLogin();
         }
     }
-    const handleLogin = async () => {
+    const handleLogin = () => {
         const url = 'http://127.0.0.0:3001/api/auth/login';
         
         const requestBody = {
@@ -48,31 +49,32 @@ const Login = (props) => {
           password,
         };
     
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
+        setAccessToken('');
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
                 'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-        
-            const data = await response.json();
-        
-            if (response.ok) {
+            },
+            body: JSON.stringify(requestBody),
+            redirect: 'follow'
+        })
+        .then(result => result.json())
+        .then(result => {
+            if(result.status === "success") {
                 setResponseMessage('Login successful');
-                props.handleLoginResponse(true)
+                props.handleLoginResponse(true);
+                console.log('result.data.access :::', result.data.access);
+                setAccessToken(result.data.access);
                 // handle success (e.g., save token, redirect, etc.)
-            } else {
-                props.handleLoginResponse(false)
-                setResponseMessage(`Login failed: ${data.message.message}`);
-                console.log(data.message.message);
-                // handle error
+                return ;
             }
-        } catch (error) {
+        })
+        .catch(error => {
             setResponseMessage(`Error: ${error.message}`);
-            // handle network error
-        }
+            props.handleLoginResponse(false);
+            setResponseMessage(`Login failed: ${data.message.message}`);
+        });
     };
 
     return (

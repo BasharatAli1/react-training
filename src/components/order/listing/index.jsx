@@ -1,14 +1,24 @@
-
 import React, { useEffect, useState } from 'react'
+import OrderDetail from '../details/orderDetail';
+import Orders from './orders';
+import { connect, useDispatch } from 'react-redux';
+import { setOrderList } from '../../../slices/order';
 
-const Patient = () => {
-    const [patients, setPatients] = useState([{}]);
+const OrderList = () => {
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const getPatients = () => {
-        const url = 'http://127.0.0.0:3001/api/patients/list';
+    
+    const getorders = () => {
+        const url = 'http://127.0.0.0:3001/api/orders/list';
         const requestBody = {
             filters: {
-                query: ""
+                clinicId :  null,
+                isPublished :  null,
+                patientId :  null,
+                query :  "",
+                refunded :  null,
+                status :  "",
+                waitingForPrescription :  null
             },
             pagination: {
                 page: 1,
@@ -28,31 +38,38 @@ const Patient = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setPatients(result.data.rows);
+                        dispatch(setOrderList(result?.data?.rows || []));
                         return ;
                     }
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => console.log('error order list', error));
             return [];
         } catch (error) {
             console.log('333', error.message);
             // handle network error
         }
     };
+
     useEffect(() => {
-        getPatients();
+        getorders();
     }, []);
-  return (
-    <>
-        <div>Patient</div>
-        {
-            loading ? <div>Loading</div> : patients.length &&
-            patients.map((patient)=> 
-                <div index={patient.name}>{patient.name} {patient.surname}</div>
-            )
-        }
-    </>
-  )
+    
+    return (
+        <>
+            <div>Index - Order Listing</div>
+            {loading ? <h2>Loading...</h2> : <Orders />}
+        </>
+    )
 }
 
-export default Patient
+export default OrderList
+
+// const mapStateToProps = (state = {}) => {
+// 	const { order = {} } = state;
+// 	const orderObj = order;
+// 	return {
+// 		orderObj,
+// 	};
+// };
+
+// export default connect(mapStateToProps)(OrderList);
