@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import OrderDetail from '../details/orderDetail';
 import Orders from './orders';
+import { connect, useDispatch } from 'react-redux';
+import { setOrderList } from '../../../slices/order';
 
 const OrderList = () => {
-    const [orders, setOrders] = useState([{}]);
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
+    
     const getorders = () => {
         const url = 'http://127.0.0.0:3001/api/orders/list';
         const requestBody = {
@@ -35,17 +38,18 @@ const OrderList = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setOrders(result.data.rows);
+                        dispatch(setOrderList(result?.data?.rows || []));
                         return ;
                     }
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => console.log('error order list', error));
             return [];
         } catch (error) {
             console.log('333', error.message);
             // handle network error
         }
     };
+
     useEffect(() => {
         getorders();
     }, []);
@@ -53,9 +57,19 @@ const OrderList = () => {
     return (
         <>
             <div>Index - Order Listing</div>
-            {loading ? <h2>Loading...</h2> : <Orders orders={orders} />}
+            {loading ? <h2>Loading...</h2> : <Orders />}
         </>
     )
 }
 
 export default OrderList
+
+// const mapStateToProps = (state = {}) => {
+// 	const { order = {} } = state;
+// 	const orderObj = order;
+// 	return {
+// 		orderObj,
+// 	};
+// };
+
+// export default connect(mapStateToProps)(OrderList);
