@@ -2,10 +2,27 @@ import React, { useEffect, useState } from 'react'
 import Patients from './patients';
 import { useDispatch } from 'react-redux';
 import { setPatientList } from '../../../slices/patient';
+import Dialog from '../../dialog/dialog';
+import AddPatientModal from '../add patient/addPatientModal';
 
 const PatientListing = () => {
     const [loading, setLoading] = useState(true);
+    const [showAddPatietnModal, setShowAddPatietnModal] = useState(false);
     const dispatch = useDispatch();
+    const closeAddPatietnModal = () => {
+        setShowAddPatietnModal(false);
+    }
+    const handleSubmitForm = (data) => {
+        console.log('DATA :::', data);
+        
+    }
+    const handleFormSubmit = (data) => {
+        console.log(' handlePatientData ......', data);
+        console.log('.. On Close ..');
+        props.onSubmit(patientData);
+        setPatientData(data);
+        props.onClose();
+    }
     const getPatients = () => {
         const url = 'http://127.0.0.0:3001/api/patients/list';
         const requestBody = {
@@ -44,10 +61,12 @@ const PatientListing = () => {
     useEffect(() => {
         getPatients();
     }, [])
-    console.log("Index - Patient Listing");
   return (
     <>
-            <div>Index - Patient Listing</div>
+        <div>Index - Patient Listing</div>
+        { showAddPatietnModal ? <AddPatientModal onClose={closeAddPatietnModal} onSubmit={handleSubmitForm} /> : null }
+       
+        <button onClick={()=>setShowAddPatietnModal(true)}>Add Patient</button>
         {
             loading ? <h2>Loading</h2> : <Patients />
         }
