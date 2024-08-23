@@ -48,7 +48,6 @@ const ClinicListing = () => {
     useEffect(() => {
         getClinics();
     }, [])
-    console.log("Index - Clinic Listing");
   return (
     <>
             <div>Index - Clinic Listing</div>

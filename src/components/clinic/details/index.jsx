@@ -46,7 +46,6 @@ const Detail = () => {
     useEffect(() => {
         getClinics();
     }, [])
-    console.log("Index - Clinic Detail");
   return (
     <>
             <div>Index - Clinic Detail</div>

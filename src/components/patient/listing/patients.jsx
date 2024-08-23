@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 const Patients = ({ patients }) => {
     const patientList = useSelector(state => state.patients.patientList);
-    console.log("Patient Listing");
     
   return (
     <>

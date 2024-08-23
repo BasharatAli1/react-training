@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 const ClinicDetail = ({ clinic, showLink = false }) => {
-    console.log("Clinic Detail");
     return (
         <>
             <div>Clinic - Detail</div>
