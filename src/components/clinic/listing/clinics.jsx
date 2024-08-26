@@ -7,7 +7,6 @@ const Clinics = () => {
     
   return (
     <>
-            <div>Clinic Listing</div>
         {
             clinicList.map((clinic)=> 
                 <ClinicDetail clinic={clinic} key={clinic.id} showLink={true} />

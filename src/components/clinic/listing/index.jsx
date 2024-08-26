@@ -32,7 +32,6 @@ const ClinicListing = () => {
                     'Authorization': accessToken
                 },
                 body: JSON.stringify(requestBody),
-                redirect: 'follow'
             }).then(response => response.json())
                 .then(result => {
                     if(result.status === "success") {
@@ -53,7 +52,6 @@ const ClinicListing = () => {
     }, []);
   return (
     <>
-        <div>Index - Clinic Listing</div>
         <AddClinicForm getClinics={getClinics} setLoading={setLoading}/>
         {
             loading ? <h2>Loading</h2> : <Clinics />

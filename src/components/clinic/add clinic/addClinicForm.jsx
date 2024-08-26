@@ -56,7 +56,6 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
                     'Authorization': accessToken
                 },
                 body: JSON.stringify(requestBody),
-                redirect: 'follow'
             }).then(response => response.json())
                 .then(result => {
                     if(result.status === "success") {

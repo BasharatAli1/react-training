@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 const ClinicDetail = ({ clinic, showLink = false }) => {
     return (
         <>
-            <div>Clinic - Detail</div>
             {
                 showLink ?
                 <Link to={`/clinic/${clinic.id}`}> 

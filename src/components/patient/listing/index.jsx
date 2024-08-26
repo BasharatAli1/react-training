@@ -27,7 +27,6 @@ const PatientListing = () => {
                 'Authorization': accessToken
             },
             body: JSON.stringify(requestBody),
-            redirect: 'follow'
         })
         .then(response => response.json())
         .then(result => {
@@ -48,7 +47,6 @@ const PatientListing = () => {
     }, [])
     return (
         <>
-            <div>Index - Patient Listing</div>
             <AddPatientForm getPatients={getPatients} setLoading={setLoading}/>
             {
                 loading ? <h2>Loading</h2> : <Patients />
