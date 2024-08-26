@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Clinics from './clinics';
 import { useDispatch } from 'react-redux';
 import { setClinicList } from '../../../slices/clinic';
+import AddClinicForm from '../add clinic/addClinicForm';
 
 const ClinicListing = () => {
     const dispatch = useDispatch();
@@ -50,7 +51,8 @@ const ClinicListing = () => {
     }, [])
   return (
     <>
-            <div>Index - Clinic Listing</div>
+        <div>Index - Clinic Listing</div>
+        <AddClinicForm />
         {
             loading ? <h2>Loading</h2> : <Clinics />
         }
