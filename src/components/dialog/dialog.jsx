@@ -1,19 +1,18 @@
 import React from 'react'
 
-const Dialog = (props) => {
+const Dialog = ({ title, children, onSubmit, hasCloseBtn = true, hasSubmitBtn = false, isOpen, onClose }) => {
     
-    const onCloseCall = () => {
-        props.onSubmit();
-    }
     return (
         <>
-            <dialog open>
-                <h1>{props.title}</h1>
+            <dialog open={isOpen}>
+                <h1>{title}</h1>
 
-                <button onClick={onCloseCall}>Close</button>
+                {hasCloseBtn && <button onClick={onClose}>Close</button>}
                 <br/>
                 <br/>
-                {props.children}
+                {children}
+                <br/>
+                {hasSubmitBtn && <button type="submit" onClick={onSubmit}>Submit</button>}
             </dialog>
         </>
     )

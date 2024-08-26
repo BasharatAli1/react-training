@@ -1,6 +1,13 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import Dialog from '../../dialog/dialog';
 
-const AddPatientForm = (props) => {
+const AddPatientForm = () => {
+    const nameRef = useRef();
+    const surnameRef = useRef();
+    const emailRef = useRef();
+    const genderRef = useRef();
+    const dobRef = useRef();
+    const phoneRef = useRef();
     const patientDataObj = {
         name: '',
         surname: '',
@@ -8,64 +15,88 @@ const AddPatientForm = (props) => {
         gender: '',
         dob: '',
         phone: '',
+        address1: "12 Brackley Road",
+        city: "Tibberton",
+        countryId: 225,
+        zipCode: "GL19 1QF"
     };
-    const [formState, setFormState] = useState(patientDataObj);
-    const handleInputChange = (event) => {
-        const {name, value} = event.target;
-        setFormState((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-        }));
+    const [patientData, setPatientData] = useState(patientDataObj);
+    console.log('Patient Data', patientData);
+    const [showAddPatientModal, setShowAddPatientModal] = useState(false);
+    const closeAddPatientModal = () => {
+        setShowAddPatientModal(false);
     }
-
-    const handleSubmit = (event) => {
-        console.log('>>> formState', formState);
-        event.preventDefault();
-        // onSubmit(formState);
-        props.onSubmit(formState);
-        setFormState(patientDataObj);
+    const handleFormSubmit = () => {
+        setPatientData({
+            ...patientDataObj,
+            name: nameRef?.current?.value || '',
+            surname: surnameRef?.current?.value || '',
+            email: emailRef?.current?.value || '',
+            gender: genderRef?.current?.value || '',
+            dob: dobRef?.current?.value || '',
+            phone: phoneRef?.current?.value || ''
+        });
+        setShowAddPatientModal(false);
+    }
+    // const handleInputChange = (event) => {
+    //     const {name, value} = event.target;
+    //     console.log(name, value);
         
-    }
+    //     setPatientData((prevFormData) => ({
+    //         ...prevFormData,
+    //         [name]: value,
+    //     }));
+    // }
     const requiredStyle = {
         color: 'red',
         fontWeight: 'bold',
     }
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <button onClick={() => setShowAddPatientModal(true)}>Add Patient</button>
+            <Dialog
+                title='Add Patient'
+                onSubmit={handleFormSubmit}
+                onClose={closeAddPatientModal}
+                hasCloseBtn={true}
+                hasSubmitBtn={true}
+                isOpen={showAddPatientModal}
+            >
                 <label htmlFor="">Name <span style={requiredStyle}>*</span>
                     <input
                         type="text"
-                        name="name"
-                        value={formState.name}
                         placeholder='Enter Name'
-                        onChange={handleInputChange}
-                        // require
+                        ref={nameRef}
+                        // name="name"
+                        // value={patientData.name}
+                        // onChange={handleInputChange}
                     />
                 </label>
                 <br />
                 <label htmlFor="">Surname <span style={requiredStyle}>*</span>
                     <input
                         type="text"
-                        name="surname"
-                        value={formState.surname}
                         placeholder='Enter Surname'
-                        onChange={handleInputChange}
+                        ref={surnameRef}
+                        // name="surname"
+                        // value={patientData.surname}
+                        // onChange={handleInputChange}
                     />
                 </label>
                 <br />
                 <label htmlFor="">Email <span style={requiredStyle}>*</span>
                     <input
                         type="text"
-                        name="email"
-                        value={formState.email}
                         placeholder='Enter Email'
-                        onChange={handleInputChange}
+                        ref={emailRef}
+                        // name="email"
+                        // value={patientData.email}
+                        // onChange={handleInputChange}
                     />
                 </label>
                 <br />
                 <label htmlFor="">Gender
-                    <select>
+                    <select ref={genderRef}>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
@@ -74,25 +105,25 @@ const AddPatientForm = (props) => {
                 <label htmlFor="">DOB <span style={requiredStyle}>*</span>
                     <input
                         type="text"
-                        name="dob"
-                        value={formState.dob}
                         placeholder='DD-MM-YYY'
-                        onChange={handleInputChange}
+                        ref={dobRef}
+                        // name="dob"
+                        // value={patientData.dob}
+                        // onChange={handleInputChange}
                     />
                 </label>
                 <br />
                 <label htmlFor="">Phone #
                     <input
                         type="text"
-                        name="phone"
-                        value={formState.phone}
                         placeholder='Enter Phone'
-                        onChange={handleInputChange}
+                        ref={phoneRef}
+                        // name="phone"
+                        // value={patientData.phone}
+                        // onChange={handleInputChange}
                     />
                 </label>
-                <br />
-                <button type="submit">Submit</button>
-            </form>
+            </Dialog>
         </>
     )
 }
