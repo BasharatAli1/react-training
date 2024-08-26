@@ -2,39 +2,28 @@ import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
 import { getAccessToken } from '../../../utils/helper';
 
-const AddClinicForm = () => {
+const AddClinicForm = ({ getClinics, setLoading }) => {
     const nameRef = useRef();
     const emailRef = useRef();
     const contactRef = useRef();
-    const clinicDataObj = {
-        name: '',
-        email: '',
-        contact: '',
-        address1: "12 Brackley Road",
-        city: "Tibberton",
-        countryId: 225,
-        zipCode: "GL19 1QF"
-    };
-    const [clinicData, setClinicData] = useState(clinicDataObj);
     const [borderStyle, setBorderStyle] = useState({});
     const [showAddClinicModal, setShowAddClinicModal] = useState(false);
     const closeAddClinicModal = () => {
         setShowAddClinicModal(false);
     }
     const handleFormSubmit = () => {
-        
         const name = nameRef?.current?.value.trim() || '';
         const email = emailRef?.current?.value.trim() || '';
         const contact = contactRef?.current?.value.trim() || '';
-        console.log('name :::', name);
-        console.log('email :::', email);
-        console.log('contact :::', contact);
-        setClinicData({
-            ...clinicDataObj,
-            name,
-            email,
-            contact
-        });
+        const clinicDataObj = {
+            name: name,
+            email: email,
+            contact: contact,
+            address1: "12 Brackley Road",
+            city: "Tibberton",
+            countryId: 225,
+            zipCode: "GL19 1QF"
+        };
         const newBorderStyle = {};
         if(!name) {
             newBorderStyle.name = { border: '2px solid red' };
@@ -50,7 +39,7 @@ const AddClinicForm = () => {
             return; // Prevent form submission if any field is empty
         }
         setBorderStyle({});
-        addClinic(clinicData);
+        addClinic(clinicDataObj);
         setShowAddClinicModal(false);
     }
 
@@ -58,6 +47,7 @@ const AddClinicForm = () => {
         const url = `http://127.0.0.0:3001/api/clinics`;
         const requestBody = clinicData;
         const accessToken = getAccessToken();
+        setLoading(true);
         try {
             fetch(url, {
                 method: 'POST',
@@ -70,8 +60,8 @@ const AddClinicForm = () => {
             }).then(response => response.json())
                 .then(result => {
                     if(result.status === "success") {
-                        setLoading(false);
-                        setClinic(result.data.clinic);
+                        getClinics();
+                        setLoading(true);
                         return ;
                     }
                 })
