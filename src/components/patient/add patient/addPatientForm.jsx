@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
+import { getAccessToken } from '../../../utils/helper';
 
 const AddPatientForm = () => {
     const nameRef = useRef();
@@ -27,6 +28,7 @@ const AddPatientForm = () => {
         setShowAddPatientModal(false);
     }
     const handleFormSubmit = () => {
+        
         const name = nameRef?.current?.value.trim() || '';
         const surname = surnameRef?.current?.value.trim() || '';
         const email = emailRef?.current?.value.trim() || '';
@@ -63,7 +65,36 @@ const AddPatientForm = () => {
             return; // Prevent form submission if any field is empty
         }
         setBorderStyle({});
+        addPatient(patientData);
         setShowAddPatientModal(false);
+    }
+
+    const addPatient = (patientData) => {
+        const url = `http://127.0.0.0:3001/api/patients`;
+        const requestBody = patientData;
+        const accessToken = getAccessToken();
+        try {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': accessToken
+                },
+                body: JSON.stringify(requestBody),
+                redirect: 'follow'
+            }).then(response => response.json())
+                .then(result => {
+                    if(result.status === "success") {
+                        setLoading(false);
+                        setClinic(result.data.clinic);
+                        return ;
+                    }
+                })
+                .catch(error => console.log('error', error));
+            return [];
+        } catch (error) {
+            console.log('addPatient Err :::', error.message);
+        }
     }
     // const handleInputChange = (event) => {
     //     const {name, value} = event.target;
