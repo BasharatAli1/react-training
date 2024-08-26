@@ -16,12 +16,10 @@ const App = () => {
     return !loginSuccess ? (
         <>
             <Login handleLoginResponse={handleLoginResponse} />
-            <div>FLAG: {!loginSuccess ? 'False': 'True'}</div>
         </>
     ) : (
         <>
             <RouterProvider router={router} />
-            <div>FLAG: {!loginSuccess ? 'False': 'True'}</div>
         </>
     )
   }

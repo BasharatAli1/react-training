@@ -2,48 +2,37 @@ import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
 import { getAccessToken } from '../../../utils/helper';
 
-const AddPatientForm = () => {
+const AddPatientForm = ({ getPatients, setLoading }) => {
     const nameRef = useRef();
     const surnameRef = useRef();
     const emailRef = useRef();
     const genderRef = useRef();
     const dobRef = useRef();
     const phoneRef = useRef();
-    const patientDataObj = {
-        name: '',
-        surname: '',
-        email: '',
-        gender: '',
-        dob: '',
-        phone: '',
-        address1: "12 Brackley Road",
-        city: "Tibberton",
-        countryId: 225,
-        zipCode: "GL19 1QF"
-    };
-    const [patientData, setPatientData] = useState(patientDataObj);
     const [borderStyle, setBorderStyle] = useState({});
     const [showAddPatientModal, setShowAddPatientModal] = useState(false);
     const closeAddPatientModal = () => {
         setShowAddPatientModal(false);
     }
     const handleFormSubmit = () => {
-        
         const name = nameRef?.current?.value.trim() || '';
         const surname = surnameRef?.current?.value.trim() || '';
         const email = emailRef?.current?.value.trim() || '';
         const gender = genderRef?.current?.value.trim() || '';
         const dob = dobRef?.current?.value.trim() || '';
         const phone = phoneRef?.current?.value.trim() || '';
-        setPatientData({
-            ...patientDataObj,
+        const patientDataObj = {
             name,
             surname,
             email,
             gender,
             dob,
-            phone
-        });
+            phone,
+            address1: "12 Brackley Road",
+            city: "Tibberton",
+            countryId: 225,
+            zipCode: "GL19 1QF"
+        };
         const newBorderStyle = {};
         if(!name) {
             newBorderStyle.name = { border: '2px solid red' };
@@ -65,7 +54,7 @@ const AddPatientForm = () => {
             return; // Prevent form submission if any field is empty
         }
         setBorderStyle({});
-        addPatient(patientData);
+        addPatient(patientDataObj);
         setShowAddPatientModal(false);
     }
 
@@ -73,28 +62,29 @@ const AddPatientForm = () => {
         const url = `http://127.0.0.0:3001/api/patients`;
         const requestBody = patientData;
         const accessToken = getAccessToken();
-        try {
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': accessToken
-                },
-                body: JSON.stringify(requestBody),
-                redirect: 'follow'
-            }).then(response => response.json())
-                .then(result => {
-                    if(result.status === "success") {
-                        setLoading(false);
-                        setClinic(result.data.clinic);
-                        return ;
-                    }
-                })
-                .catch(error => console.log('error', error));
-            return [];
-        } catch (error) {
+        setLoading(true);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': accessToken
+            },
+            body: JSON.stringify(requestBody),
+            redirect: 'follow'
+        })
+        .then(response => response.json())
+        .then(result => {
+            if(result.status === "success") {
+                getPatients();
+                setLoading(false);
+                return ;
+            }
+        })
+        .catch(error => {
+            setLoading(false);
             console.log('addPatient Err :::', error.message);
-        }
+        });
+        return [];
     }
     // const handleInputChange = (event) => {
     //     const {name, value} = event.target;
@@ -166,7 +156,7 @@ const AddPatientForm = () => {
                 <label htmlFor="">DOB <span style={requiredStyle}>*</span>
                     <input
                         type="text"
-                        placeholder='DD-MM-YYY'
+                        placeholder='YYYY-MM-DD'
                         ref={dobRef}
                         style={borderStyle.dob}
                         // name="dob"

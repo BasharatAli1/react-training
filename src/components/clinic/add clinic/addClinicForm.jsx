@@ -68,6 +68,7 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
                 .catch(error => console.log('error', error));
             return [];
         } catch (error) {
+            setLoading(false);
             console.log('addClinic Err :::', error.message);
         }
     }
