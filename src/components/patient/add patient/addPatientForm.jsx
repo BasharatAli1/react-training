@@ -21,21 +21,48 @@ const AddPatientForm = () => {
         zipCode: "GL19 1QF"
     };
     const [patientData, setPatientData] = useState(patientDataObj);
-    console.log('Patient Data', patientData);
+    const [borderStyle, setBorderStyle] = useState({});
     const [showAddPatientModal, setShowAddPatientModal] = useState(false);
     const closeAddPatientModal = () => {
         setShowAddPatientModal(false);
     }
     const handleFormSubmit = () => {
+        const name = nameRef?.current?.value.trim() || '';
+        const surname = surnameRef?.current?.value.trim() || '';
+        const email = emailRef?.current?.value.trim() || '';
+        const gender = genderRef?.current?.value.trim() || '';
+        const dob = dobRef?.current?.value.trim() || '';
+        const phone = phoneRef?.current?.value.trim() || '';
         setPatientData({
             ...patientDataObj,
-            name: nameRef?.current?.value || '',
-            surname: surnameRef?.current?.value || '',
-            email: emailRef?.current?.value || '',
-            gender: genderRef?.current?.value || '',
-            dob: dobRef?.current?.value || '',
-            phone: phoneRef?.current?.value || ''
+            name,
+            surname,
+            email,
+            gender,
+            dob,
+            phone
         });
+        const newBorderStyle = {};
+        if(!name) {
+            newBorderStyle.name = { border: '2px solid red' };
+        }
+        if(!surname) {
+            newBorderStyle.surname = { border: '2px solid red' };
+        }
+        // Regular expression to check if email format is valid
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!email || !emailPattern.test(email)) {
+            newBorderStyle.email = { border: '2px solid red' };
+        }
+        if(!dob) {
+            newBorderStyle.dob = { border: '2px solid red' };
+        }
+        setBorderStyle(newBorderStyle);
+        
+        if (Object.keys(newBorderStyle).length !== 0) {
+            return; // Prevent form submission if any field is empty
+        }
+        setBorderStyle({});
         setShowAddPatientModal(false);
     }
     // const handleInputChange = (event) => {
@@ -67,6 +94,7 @@ const AddPatientForm = () => {
                         type="text"
                         placeholder='Enter Name'
                         ref={nameRef}
+                        style={borderStyle.name}
                         // name="name"
                         // value={patientData.name}
                         // onChange={handleInputChange}
@@ -78,6 +106,7 @@ const AddPatientForm = () => {
                         type="text"
                         placeholder='Enter Surname'
                         ref={surnameRef}
+                        style={borderStyle.surname}
                         // name="surname"
                         // value={patientData.surname}
                         // onChange={handleInputChange}
@@ -86,9 +115,10 @@ const AddPatientForm = () => {
                 <br />
                 <label htmlFor="">Email <span style={requiredStyle}>*</span>
                     <input
-                        type="text"
+                        type="email"
                         placeholder='Enter Email'
                         ref={emailRef}
+                        style={borderStyle.email}
                         // name="email"
                         // value={patientData.email}
                         // onChange={handleInputChange}
@@ -107,6 +137,7 @@ const AddPatientForm = () => {
                         type="text"
                         placeholder='DD-MM-YYY'
                         ref={dobRef}
+                        style={borderStyle.dob}
                         // name="dob"
                         // value={patientData.dob}
                         // onChange={handleInputChange}
