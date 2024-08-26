@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Patients from './patients';
 import { useDispatch } from 'react-redux';
 import { setPatientList } from '../../../slices/patient';
+import AddPatientForm from '../add patient/addPatientForm';
 
 const PatientListing = () => {
     const [loading, setLoading] = useState(true);
@@ -28,10 +29,10 @@ const PatientListing = () => {
                 redirect: 'follow'
             }).then(response => response.json())
                 .then(result => {
-                    if(result.status === "success") {
+                    if (result.status === "success") {
                         setLoading(false);
                         dispatch(setPatientList(result?.data?.rows || []));
-                        return ;
+                        return;
                     }
                 })
                 .catch(error => console.log('error', error));
@@ -44,15 +45,15 @@ const PatientListing = () => {
     useEffect(() => {
         getPatients();
     }, [])
-    console.log("Index - Patient Listing");
-  return (
-    <>
+    return (
+        <>
             <div>Index - Patient Listing</div>
-        {
-            loading ? <h2>Loading</h2> : <Patients />
-        }
-    </>
-  )
+            <AddPatientForm/>
+            {
+                loading ? <h2>Loading</h2> : <Patients />
+            }
+        </>
+    )
 }
 
 export default PatientListing

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 const PatientDetail = ({ patient, showLink = false }) => {
-    console.log("Patient Detail");
     return (
         <>
             <div>Patient - Detail {showLink ? 'tru':'false'}</div>

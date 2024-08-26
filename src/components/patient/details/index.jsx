@@ -34,7 +34,6 @@ const Detail = () => {
     useEffect(() => {
         getPatients();
     }, [])
-    console.log("Index - Patient Detail");
   return (
     <>
             <div>Index - Patient Detail</div>

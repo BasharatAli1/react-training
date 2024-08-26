@@ -2,10 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-// import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import store from './store/index.js'
-// const { store } = configureStore();
+// import configureStoreFunc from '../src/store/index.js'
+// const { store } = configureStoreFunc();
 
 createRoot(document.getElementById('root')).render(
 //   <StrictMode>

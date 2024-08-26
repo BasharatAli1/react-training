@@ -3,7 +3,6 @@ import ClinicDetail from '../details/clinicDetail'
 import { useSelector } from 'react-redux';
 
 const Clinics = () => {
-    console.log("Clinic Listing");
     const clinicList = useSelector(state => state.clinics.clinicList)
     
   return (

@@ -64,7 +64,6 @@ const Login = (props) => {
             if(result.status === "success") {
                 setResponseMessage('Login successful');
                 props.handleLoginResponse(true);
-                console.log('result.data.access :::', result.data.access);
                 setAccessToken(result.data.access);
                 // handle success (e.g., save token, redirect, etc.)
                 return ;
