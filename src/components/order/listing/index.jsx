@@ -11,7 +11,7 @@ const OrderList = () => {
     const [loading, setLoading] = useState(true);
     
     const getOrders = () => {
-        const url = 'http://127.0.0.0:3001/api/orders/list';
+        const url = 'http://127.0.0.0:3001/api/payment-link/list';
         const accessToken = getAccessToken();
         const requestBody = {
             filters: {
@@ -19,9 +19,7 @@ const OrderList = () => {
                 isPublished :  null,
                 patientId :  null,
                 query :  "",
-                refunded :  null,
                 status :  "",
-                waitingForPrescription :  null
             },
             pagination: {
                 page: 1,
@@ -54,6 +52,7 @@ const OrderList = () => {
     
     return (
         <>
+            <AddOrderForm getOrders={getOrders} setLoading={setLoading} />
             {loading ? <h2>Loading...</h2> : <Orders />}
         </>
     )
