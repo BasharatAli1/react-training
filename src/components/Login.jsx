@@ -57,7 +57,6 @@ const Login = (props) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(requestBody),
-            redirect: 'follow'
         })
         .then(result => result.json())
         .then(result => {
