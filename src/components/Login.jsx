@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { setAccessToken } from '../utils/helper';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../slices/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
     const [email, setEmail] = useState("basharat@camp1.tkxel.com");
@@ -62,18 +65,27 @@ const Login = (props) => {
         .then(result => {
             if(result.status === "success") {
                 setResponseMessage('Login successful');
-                props.handleLoginResponse(true);
+                handleLoginResponse(true);
                 setAccessToken(result.data.access);
+                dispatch(setAuth(true));
+                navigate('/order');
                 // handle success (e.g., save token, redirect, etc.)
                 return ;
             }
         })
         .catch(error => {
             setResponseMessage(`Error: ${error.message}`);
-            props.handleLoginResponse(false);
-            setResponseMessage(`Login failed: ${data.message.message}`);
+            handleLoginResponse(false);
+            dispatch(setAuth(false));
+            setResponseMessage(`Login failed: ${data?.message?.message}`);
         });
     };
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleLoginResponse = (flag) => {
+        dispatch(setAuth(flag || false));
+    }
 
     return (
         <>

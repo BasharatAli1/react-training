@@ -1,7 +1,5 @@
 import './App.css'
 import router from './components/router';
-import Login from './components/Login';
-import { useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
   
 if (import.meta.hot) {
@@ -9,15 +7,7 @@ if (import.meta.hot) {
 }
 
 const App = () => {
-    const [loginSuccess, setLoginSuccess] = useState(false);
-    const handleLoginResponse = (flag) => {
-        setLoginSuccess(flag);
-    }
-    return !loginSuccess ? (
-        <>
-            <Login handleLoginResponse={handleLoginResponse} />
-        </>
-    ) : (
+    return (
         <>
             <RouterProvider router={router} />
         </>

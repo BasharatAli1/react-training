@@ -8,18 +8,61 @@ import ClinicDetail from './clinic/details';
 import ClinicListing from "./clinic/listing";
 import PatientDetail from './patient/details';
 import PatientListing from "./patient/listing";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 const routes = createRoutesFromElements(
     <Route path="/" element={<Layout />} >
         <Route index element={<Home />} />
-        <Route path="order" element={<OrderList />} />
-        <Route path="order/:id" element={<OrderDetail />} />
-        <Route path="clinic" element={<ClinicListing />} />
-        <Route path="clinic/:id" element={<ClinicDetail />} />
-        <Route path="patient" element={<PatientListing />} />
-        <Route path="patient/:id" element={<PatientDetail />} />
-        {/* <Route path="login" element={<Login />} /> */}
+        <Route 
+            path="order" 
+            element={
+                <ProtectedRoute>
+                    <OrderList />
+                </ProtectedRoute>
+            } 
+        />
+        <Route 
+            path="order/:id" 
+            element={
+                <ProtectedRoute>
+                    <OrderDetail />
+                </ProtectedRoute>
+            } 
+        />
+        <Route 
+            path="clinic" 
+            element={
+                <ProtectedRoute>
+                    <ClinicListing />
+                </ProtectedRoute>
+            } 
+        />
+        <Route 
+            path="clinic/:id" 
+            element={
+                <ProtectedRoute>
+                    <ClinicDetail />
+                </ProtectedRoute>
+            } 
+        />
+        <Route 
+            path="patient" 
+            element={
+                <ProtectedRoute>
+                    <PatientListing />
+                </ProtectedRoute>
+            } 
+        />
+        <Route 
+            path="patient/:id" 
+            element={
+                <ProtectedRoute>
+                    <PatientDetail />
+                </ProtectedRoute>
+            } 
+        />
+        <Route path="login" element={<Login />} />
     </Route>
 );
 const router = createBrowserRouter(routes);
