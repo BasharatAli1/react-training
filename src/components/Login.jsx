@@ -3,6 +3,7 @@ import { setAccessToken } from '../utils/helper';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../slices/auth';
 import { useNavigate } from 'react-router-dom';
+import '../assets/css/form.css'
 
 const Login = (props) => {
     const [email, setEmail] = useState("basharat@camp1.tkxel.com");
@@ -88,26 +89,35 @@ const Login = (props) => {
     }
 
     return (
-        <>
-            {responseMessage && <span style={{ color:"red" }}>{responseMessage}</span>}
-            <br />
-            <label htmlFor="">
+        <div className="login-form-container">
+            <b> Welcome Back! 👋 </b>
+            <p> Sign in to your account </p>
+            {responseMessage && <span className="login-error-message">{responseMessage}</span>}
+            <label className="login-label" htmlFor="">
                 Email:
-                <input type='text' value={email} placeholder='Enter Email Address' onChange={handleEmailChange}/>
+                <input
+                    type="text"
+                    value={email}
+                    placeholder="Enter Email Address"
+                    onChange={handleEmailChange}
+                    className="login-input-field"
+                />
             </label>
-            <br />
-            {errors.email && <span style={{ color:"red" }}>{errors.email}</span>}
-            <br />
-            <label htmlFor="">
+            {errors.email && <span className="login-error-message">{errors.email}</span>}
+            <label className="login-label" htmlFor="">
                 Password:
-                <input type='text' value={password} placeholder='Enter Password' onChange={handlePasswordChange}/>
+                <input
+                    type="password"
+                    value={password}
+                    placeholder="Enter Password"
+                    onChange={handlePasswordChange}
+                    className="login-input-field"
+                />
             </label>
-            <br />
-            {errors.password && <span style={{ color:"red" }}>{errors.password}</span>}
-            <br />
-            <button onClick={handleSubmit}>Submit</button>
-        </>
-    )
+            {errors.password && <span className="login-error-message">{errors.password}</span>}
+            <button onClick={handleSubmit} className="login-submit-button">Submit</button>
+        </div>
+    );
 }
 
 export default Login

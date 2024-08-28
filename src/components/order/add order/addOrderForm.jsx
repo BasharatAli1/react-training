@@ -85,12 +85,6 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
         const medicine = JSON.parse(selectedMedicine);
         const patient = JSON.parse(selectedPatient);
         const doctor = JSON.parse(selectedDoctor);
-        console.log('DOCTOR :::', {
-            name: doctor.name,
-            last_name: doctor.surname || '...',
-            registration_number: doctor.registrationNumber || '11111',
-            id: doctor.id
-        });
         
 
         const orderDataObj = {
@@ -228,7 +222,7 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
 
     return (
         <>
-            <button onClick={() => setShowAddOrderModal(true)}>Add Order</button>
+            {!showAddOrderModal && <button className='info-button' onClick={() => setShowAddOrderModal(true)}>Add Order</button>}
             <Dialog
                 title='Add Order'
                 onSubmit={handleFormSubmit}
@@ -237,122 +231,133 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
                 hasSubmitBtn={true}
                 isOpen={showAddOrderModal}
             >
-                <label htmlFor="">Patient <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder="Search Patient"
-                        onChange={handlePatientNameChange}
-                        style={borderStyle.patient}
-                    />
-                    {patientList.length > 0 && (
-                        <select
-                            id="patient"
-                            value={selectedPatient}
-                            onChange={handlePatientSelectChange}
-                            style={borderStyle.name}
-                        >
-                            <option value="" disabled>Select Patient</option>
-                            {patientList.map(patient => (
-                                <option key={patient.id} value={JSON.stringify(patient)}>
-                                    {patient.name} {patient.surname}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                                
-                </label>
-                <br />
-                <label htmlFor="">Clinic <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder='Search Clinic'
-                        onChange={handleClinicNameChange}
-                        style={borderStyle.clinic}
-                    />
-                    {clinicList.length > 0 && (
-                        <select
-                            id="clinic"
-                            value={selectedClinic}
-                            onChange={handleClinicSelectChange}
-                            style={borderStyle.name}
-                        >
-                            <option value="" disabled>Select Clinic</option>
-                            {clinicList.map(clinic => (
-                                <option key={clinic.id} value={clinic.id}>
-                                    {clinic.name}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </label>
-                <br />
-                <label htmlFor="">Doctor <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder='Search Doctor'
-                        onChange={handleDoctorNameChange}
-                        style={borderStyle.doctor}
-                    />
-                    {doctorList.length > 0 && (
-                        <select
-                            id="doctor"
-                            value={selectedDoctor}
-                            onChange={handleDoctorSelectChange}
-                            style={borderStyle.name}
-                        >
-                            <option value="" disabled>Select Doctor</option>
-                            {doctorList.map(doctor => (
-                                <option key={doctor.id} value={JSON.stringify(doctor)}>
-                                    {doctor.name} {doctor.surname}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </label>
-                <br />
-                <label htmlFor="">Medicine <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder='Search Medicine'
-                        onChange={handleMedicineNameChange}
-                        style={borderStyle.medicine}
-                    />
-                    {medicineList.length > 0 && (
-                        <select
-                            id="medicine"
-                            value={selectedMedicine}
-                            onChange={handleMedicineSelectChange}
-                            style={borderStyle.name}
-                        >
-                            <option value="" disabled>Select Medicine</option>
-                            {medicineList.map(medicine => (
-                                <option key={medicine.APPID || medicine.VPPID} value={JSON.stringify(medicine)}>
-                                    {medicine.productName || medicine.NM} - {medicine.price}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </label>
-                <br />
-                <label htmlFor="">Quantity
-                    <input
-                        type="text"
-                        placeholder='Enter Quantity'
-                        disabled={selectedMedicine?false:true}
-                        onChange={handleMedicineQty}
-                        value={medicineQty}
-                        style={borderStyle.medicineQty}
-                    />
-                </label>
-                <label htmlFor="">Price
-                    <input
-                        type="text"
-                        placeholder='Price'
-                        value={medicineTotal}
-                        disabled
-                    />
-                </label>
-                <br />
+                <div className="dialog-form-container">
+                    <label className="dialog-label" htmlFor="">Patient <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            placeholder="Search Patient"
+                            onChange={handlePatientNameChange}
+                            style={borderStyle.patient}
+                            className="dialog-input-field"
+                        />
+                        {patientList.length > 0 && (
+                            <select
+                                id="patient"
+                                value={selectedPatient}
+                                onChange={handlePatientSelectChange}
+                                style={borderStyle.name}
+                                className="dialog-select-field"
+                            >
+                                <option value="" disabled>Select Patient</option>
+                                {patientList.map(patient => (
+                                    <option key={patient.id} value={JSON.stringify(patient)}>
+                                        {patient.name} {patient.surname}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                                    
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Clinic <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            placeholder='Search Clinic'
+                            onChange={handleClinicNameChange}
+                            style={borderStyle.clinic}
+                            className="dialog-input-field"
+                        />
+                        {clinicList.length > 0 && (
+                            <select
+                                id="clinic"
+                                value={selectedClinic}
+                                onChange={handleClinicSelectChange}
+                                style={borderStyle.name}
+                                className="dialog-select-field"
+                            >
+                                <option value="" disabled>Select Clinic</option>
+                                {clinicList.map(clinic => (
+                                    <option key={clinic.id} value={clinic.id}>
+                                        {clinic.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Doctor <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            placeholder='Search Doctor'
+                            onChange={handleDoctorNameChange}
+                            style={borderStyle.doctor}
+                            className="dialog-input-field"
+                        />
+                        {doctorList.length > 0 && (
+                            <select
+                                id="doctor"
+                                value={selectedDoctor}
+                                onChange={handleDoctorSelectChange}
+                                style={borderStyle.name}
+                                className="dialog-select-field"
+                            >
+                                <option value="" disabled>Select Doctor</option>
+                                {doctorList.map(doctor => (
+                                    <option key={doctor.id} value={JSON.stringify(doctor)}>
+                                        {doctor.name} {doctor.surname}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Medicine <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            placeholder='Search Medicine'
+                            onChange={handleMedicineNameChange}
+                            style={borderStyle.medicine}
+                            className="dialog-input-field"
+                        />
+                        {medicineList.length > 0 && (
+                            <select
+                                id="medicine"
+                                value={selectedMedicine}
+                                onChange={handleMedicineSelectChange}
+                                style={borderStyle.name}
+                                className="dialog-select-field"
+                            >
+                                <option value="" disabled>Select Medicine</option>
+                                {medicineList.map(medicine => (
+                                    <option key={medicine.APPID || medicine.VPPID} value={JSON.stringify(medicine)}>
+                                        {medicine.productName || medicine.NM} - {medicine.price}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Quantity
+                        <input
+                            type="text"
+                            placeholder='Enter Quantity'
+                            disabled={selectedMedicine?false:true}
+                            onChange={handleMedicineQty}
+                            value={medicineQty}
+                            style={borderStyle.medicineQty}
+                            className="dialog-input-field"
+                        />
+                    </label>
+                    <label className="dialog-label" htmlFor="">Price
+                        <input
+                            type="text"
+                            placeholder='Price'
+                            value={medicineTotal}
+                            className="dialog-input-field"
+                            disabled
+                        />
+                    </label>
+                </div>
             </Dialog>
         </>
     )

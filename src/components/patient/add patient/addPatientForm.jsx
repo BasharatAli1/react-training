@@ -14,6 +14,10 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
     const closeAddPatientModal = () => {
         setShowAddPatientModal(false);
     }
+    const resetBorderStyle = (event) => {
+        const { name, value } = event.target;
+        setBorderStyle({...borderStyle, [name]: {}});
+    }
     const handleFormSubmit = () => {
         const name = nameRef?.current?.value.trim() || '';
         const surname = surnameRef?.current?.value.trim() || '';
@@ -100,7 +104,7 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
     }
     return (
         <>
-            <button onClick={() => setShowAddPatientModal(true)}>Add Patient</button>
+            {!showAddPatientModal && <button className='info-button' onClick={() => setShowAddPatientModal(true)}>Add Patient</button>}
             <Dialog
                 title='Add Patient'
                 onSubmit={handleFormSubmit}
@@ -109,71 +113,89 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
                 hasSubmitBtn={true}
                 isOpen={showAddPatientModal}
             >
-                <label htmlFor="">Name <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder='Enter Name'
-                        ref={nameRef}
-                        style={borderStyle.name}
-                        // name="name"
-                        // value={patientData.name}
-                        // onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label htmlFor="">Surname <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder='Enter Surname'
-                        ref={surnameRef}
-                        style={borderStyle.surname}
-                        // name="surname"
-                        // value={patientData.surname}
-                        // onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label htmlFor="">Email <span style={requiredStyle}>*</span>
-                    <input
-                        type="email"
-                        placeholder='Enter Email'
-                        ref={emailRef}
-                        style={borderStyle.email}
-                        // name="email"
-                        // value={patientData.email}
-                        // onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label htmlFor="">Gender
-                    <select ref={genderRef}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </label>
-                <br />
-                <label htmlFor="">DOB <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder='YYYY-MM-DD'
-                        ref={dobRef}
-                        style={borderStyle.dob}
-                        // name="dob"
-                        // value={patientData.dob}
-                        // onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label htmlFor="">Phone #
-                    <input
-                        type="text"
-                        placeholder='Enter Phone'
-                        ref={phoneRef}
-                        // name="phone"
-                        // value={patientData.phone}
-                        // onChange={handleInputChange}
-                    />
-                </label>
+                <div className="dialog-form-container">
+                    <label className="dialog-label" htmlFor="">Name <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            name='name'
+                            placeholder='Enter Name'
+                            ref={nameRef}
+                            onChange={resetBorderStyle}
+                            className="dialog-input-field"
+                            style={borderStyle.name}
+                            // name="name"
+                            // value={patientData.name}
+                            // onChange={handleInputChange}
+                        />
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Surname <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            name='surname'
+                            placeholder='Enter Surname'
+                            ref={surnameRef}
+                            onChange={resetBorderStyle}
+                            className="dialog-input-field"
+                            style={borderStyle.surname}
+                            // name="surname"
+                            // value={patientData.surname}
+                            // onChange={handleInputChange}
+                        />
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Email <span style={requiredStyle}>*</span>
+                        <input
+                            type="email"
+                            name='email'
+                            placeholder='Enter Email'
+                            ref={emailRef}
+                            onChange={resetBorderStyle}
+                            className="dialog-input-field"
+                            style={borderStyle.email}
+                            // name="email"
+                            // value={patientData.email}
+                            // onChange={handleInputChange}
+                        />
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Gender
+                        <select
+                            ref={genderRef}
+                            className="dialog-select-field"
+                        >
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">DOB <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            name='dob'
+                            placeholder='YYYY-MM-DD'
+                            ref={dobRef}
+                            onChange={resetBorderStyle}
+                            className="dialog-input-field"
+                            style={borderStyle.dob}
+                            // name="dob"
+                            // value={patientData.dob}
+                            // onChange={handleInputChange}
+                        />
+                    </label>
+                    <br />
+                    <label className="dialog-label" htmlFor="">Phone #
+                        <input
+                            type="text"
+                            placeholder='Enter Phone'
+                            ref={phoneRef}
+                            className="dialog-input-field"
+                            // name="phone"
+                            // value={patientData.phone}
+                            // onChange={handleInputChange}
+                        />
+                    </label>
+                </div>
             </Dialog>
         </>
     )

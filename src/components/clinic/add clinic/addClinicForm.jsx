@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
 import { getAccessToken } from '../../../utils/helper';
+import '../../../assets/css/dialog.css';
 
 const AddClinicForm = ({ getClinics, setLoading }) => {
     const nameRef = useRef();
@@ -10,6 +11,10 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
     const [showAddClinicModal, setShowAddClinicModal] = useState(false);
     const closeAddClinicModal = () => {
         setShowAddClinicModal(false);
+    }
+    const resetBorderStyle = (event) => {
+        const { name, value } = event.target;
+        setBorderStyle({...borderStyle, [name]: {}});
     }
     const handleFormSubmit = () => {
         const name = nameRef?.current?.value.trim() || '';
@@ -77,7 +82,7 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
     }
     return (
         <>
-            <button onClick={() => setShowAddClinicModal(true)}>Add Clinic</button>
+            {!showAddClinicModal && <button className='info-button' onClick={() => setShowAddClinicModal(true)}>Add Clinic</button>}
             <Dialog
                 title='Add Clinic'
                 onSubmit={handleFormSubmit}
@@ -86,31 +91,38 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
                 hasSubmitBtn={true}
                 isOpen={showAddClinicModal}
             >
-                <label htmlFor="">Clinic Name <span style={requiredStyle}>*</span>
-                    <input
-                        type="text"
-                        placeholder='Enter Name'
-                        ref={nameRef}
-                        style={borderStyle.name}
-                    />
-                </label>
-                <br />
-                <label htmlFor="">Email <span style={requiredStyle}>*</span>
-                    <input
-                        type="email"
-                        placeholder='Enter Email'
-                        ref={emailRef}
-                        style={borderStyle.email}
-                    />
-                </label>
-                <br />
-                <label htmlFor="">Contact #
-                    <input
-                        type="text"
-                        placeholder='Enter Contact'
-                        ref={contactRef}
-                    />
-                </label>
+                <div className="dialog-form-container">
+                    <label className="dialog-label" htmlFor="">Clinic Name <span style={requiredStyle}>*</span>
+                        <input
+                            type="text"
+                            name='name'
+                            placeholder='Enter Clinic Name'
+                            ref={nameRef}
+                            style={borderStyle.name}
+                            onChange={resetBorderStyle}
+                            className="dialog-input-field"
+                        />
+                    </label>
+                    <label className="dialog-label" htmlFor="">Email <span style={requiredStyle}>*</span>
+                        <input
+                            type="email"
+                            name='email'
+                            placeholder='Enter Email'
+                            ref={emailRef}
+                            style={borderStyle.email}
+                            onChange={resetBorderStyle}
+                            className="dialog-input-field"
+                        />
+                    </label>
+                    <label className="dialog-label" htmlFor="">Contact #
+                        <input
+                            type="text"
+                            placeholder='Enter Contact'
+                            ref={contactRef}
+                            className="dialog-input-field"
+                        />
+                    </label>
+                </div>
             </Dialog>
         </>
     )
