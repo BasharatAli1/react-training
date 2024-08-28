@@ -1,0 +1,25 @@
+.nav-bar {
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid black; */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-bar-link {
+    color: black;
+    text-decoration: none;
+    font-size: 22px;
+    margin-right: 20px;
+}
+
+.logout-button {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #F44336;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
