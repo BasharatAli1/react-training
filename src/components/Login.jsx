@@ -65,17 +65,22 @@ const Login = (props) => {
         .then(result => result.json())
         .then(result => {
             if(result.status === "success") {
-                setResponseMessage('Login successful');
+                setResponseMessage('Login Successful!');
                 handleLoginResponse(true);
                 setAccessToken(result.data.access);
                 dispatch(setAuth(true));
                 navigate('/order');
-                // handle success (e.g., save token, redirect, etc.)
+                return ;
+            } else {
+                const errMsg = result?.inner?.message?.message || result?.inner?.message || result?.message?.message || result?.message|| result?.name;
+                setResponseMessage(`Login Failed: ${errMsg}`);
+                handleLoginResponse(false);
+                setAccessToken('');
+                dispatch(setAuth(false));
                 return ;
             }
         })
         .catch(error => {
-            setResponseMessage(`Error: ${error.message}`);
             handleLoginResponse(false);
             dispatch(setAuth(false));
             setResponseMessage(`Login failed: ${data?.message?.message}`);
@@ -92,7 +97,7 @@ const Login = (props) => {
         <div className="login-form-container">
             <b> Welcome Back! 👋 </b>
             <p> Sign in to your account </p>
-            {responseMessage && <span className="login-error-message">{responseMessage}</span>}
+            {responseMessage && <span className="error-message">{responseMessage}</span>}
             <label className="login-label" htmlFor="">
                 Email:
                 <input
@@ -103,7 +108,7 @@ const Login = (props) => {
                     className="login-input-field"
                 />
             </label>
-            {errors.email && <span className="login-error-message">{errors.email}</span>}
+            {errors.email && <span className="error-message">{errors.email}</span>}
             <label className="login-label" htmlFor="">
                 Password:
                 <input
@@ -114,7 +119,7 @@ const Login = (props) => {
                     className="login-input-field"
                 />
             </label>
-            {errors.password && <span className="login-error-message">{errors.password}</span>}
+            {errors.password && <span className="error-message">{errors.password}</span>}
             <button onClick={handleSubmit} className="login-submit-button">Submit</button>
         </div>
     );

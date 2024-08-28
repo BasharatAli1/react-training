@@ -13,7 +13,11 @@ import ProtectedRoute from "./ProtectedRoute";
 
 const routes = createRoutesFromElements(
     <Route path="/" element={<Layout />} >
-        <Route index element={<Home />} />
+        <Route index element={
+                <ProtectedRoute>
+                    <Home />
+                </ProtectedRoute>
+            } />
         <Route 
             path="order" 
             element={

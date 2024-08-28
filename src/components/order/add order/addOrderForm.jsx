@@ -15,6 +15,8 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
     const [medicineTotal, setMedicineTotal] = useState(0);
     const [borderStyle, setBorderStyle] = useState({});
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [responseMessage, setResponseMessage] = useState('');
+
     const closeAddOrderModal = () => {
         setShowAddOrderModal(false);
     }
@@ -123,7 +125,6 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
         };
         console.log('OBJ :::', orderDataObj);
         addOrder(orderDataObj);
-        setShowAddOrderModal(false);
     }
 
     const addOrder = (payload) => {
@@ -144,6 +145,11 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
             if(result.status === "success") {
                 getOrders();
                 setLoading(false);
+                setShowAddOrderModal(false);
+                return ;
+            } else {
+                const errMsg = result?.inner?.message?.message || result?.inner?.message || result?.message?.message || result?.message|| result?.name;
+                setResponseMessage(`Error: ${errMsg}`);
                 return ;
             }
         })
@@ -232,6 +238,7 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
                 isOpen={showAddOrderModal}
             >
                 <div className="dialog-form-container">
+                    {responseMessage && <span className="error-message">{responseMessage}</span>}
                     <label className="dialog-label" htmlFor="">Patient <span style={requiredStyle}>*</span>
                         <input
                             type="text"

@@ -6,9 +6,9 @@ const PatientDetail = ({ patient, showLink = false }) => {
             {
                 showLink ?
                 <Link to={`/patient/${patient.id}`}> 
-                    <h2 style={{ margin: "8px 0px" }}>{patient.id} - {patient.name} {patient.surname}</h2>
+                    <h2>{patient.id} - {patient.name} {patient.surname}</h2>
                 </Link> :
-                <h2 style={{ margin: "8px 0px" }}>{patient.id}</h2>
+                <h2>{patient.id}</h2>
             }
         </>
     )

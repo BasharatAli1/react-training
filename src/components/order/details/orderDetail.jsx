@@ -6,9 +6,9 @@ const OrderDetail = ({ order, showLink = false }) => {
             {
                 showLink ?
                 <Link to={`/order/${order.id}`}> 
-                    <h2 style={{ margin: "8px 0px" }}>{order.id} - {order.patient.name} {order.patient.surname}</h2>
+                    <h2>{order.id} - {order.patient.name} {order.patient.surname}</h2>
                 </Link> :
-                <h2 style={{ margin: "8px 0px" }}>{order.id} - {order.patient.name} {order.patient.surname}</h2>
+                <h2>{order.id} - {order.patient.name} {order.patient.surname}</h2>
             }
         </>
     )

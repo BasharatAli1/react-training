@@ -11,6 +11,8 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
     const phoneRef = useRef();
     const [borderStyle, setBorderStyle] = useState({});
     const [showAddPatientModal, setShowAddPatientModal] = useState(false);
+    const [responseMessage, setResponseMessage] = useState('');
+    
     const closeAddPatientModal = () => {
         setShowAddPatientModal(false);
     }
@@ -59,7 +61,6 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
         }
         setBorderStyle({});
         addPatient(patientDataObj);
-        setShowAddPatientModal(false);
     }
 
     const addPatient = (patientData) => {
@@ -78,8 +79,13 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
         .then(response => response.json())
         .then(result => {
             if(result.status === "success") {
+                setShowAddPatientModal(false);
                 getPatients();
                 setLoading(false);
+                return ;
+            } else {
+                const errMsg = result?.inner?.message?.message || result?.inner?.message || result?.message?.message || result?.message|| result?.name;
+                setResponseMessage(`Error: ${errMsg}`);
                 return ;
             }
         })
@@ -114,6 +120,7 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
                 isOpen={showAddPatientModal}
             >
                 <div className="dialog-form-container">
+                    {responseMessage && <span className="error-message">{responseMessage}</span>}
                     <label className="dialog-label" htmlFor="">Name <span style={requiredStyle}>*</span>
                         <input
                             type="text"
