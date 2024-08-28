@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { setAccessToken } from '../utils/helper';
+import { setAccessToken } from '../../utils/helper';
 import { useDispatch } from 'react-redux';
-import { setAuth } from '../slices/auth';
+import { setAuth } from '../../slices/auth';
 import { useNavigate } from 'react-router-dom';
-import '../assets/css/form.css'
+import './login.css'
 
-const Login = (props) => {
+const Login = () => {
     const [email, setEmail] = useState("basharat@camp1.tkxel.com");
     const [password, setPassword] = useState("Tkxel123");
-    const [deviceToken, setDeviceToken] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [errors, setError] = useState({
         email: "",
@@ -48,7 +47,7 @@ const Login = (props) => {
         const url = 'http://127.0.0.0:3001/api/auth/login';
         
         const requestBody = {
-          deviceToken,
+          deviceToken: '',
           email,
           password,
         };

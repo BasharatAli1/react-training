@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import '../assets/css/layout.css';
-import { ClinicIcon } from '../assets/icons/svg/clinicIcon.jsx'
-import { OrdersIcon } from '../assets/icons/svg/ordersIcon.jsx'
-import { PatientIcon } from '../assets/icons/svg/patientIcon.jsx'
-import { eraseAccessToken } from '../utils/helper.js';
-import { setAuth } from '../slices/auth.js';
+import './layout.css';
+import { ClinicIcon } from '../../assets/icons/svg/clinicIcon.jsx'
+import { OrdersIcon } from '../../assets/icons/svg/ordersIcon.jsx'
+import { PatientIcon } from '../../assets/icons/svg/patientIcon.jsx'
+import { eraseAccessToken } from '../../utils/helper.js';
+import { setAuth } from '../../slices/auth.js';
 
 const Layout = () => {
     const dispatch = useDispatch();
