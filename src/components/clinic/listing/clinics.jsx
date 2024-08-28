@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import ClinicDetail from '../details/clinicDetail'
+import React from 'react'
 import { useSelector } from 'react-redux';
+import Table from '../../table/Table';
 
 const Clinics = () => {
     const clinicList = useSelector(state => state.clinics.clinicList)
-    
-  return (
-    <>
-        {
-            clinicList.map((clinic)=> 
-                <ClinicDetail clinic={clinic} key={clinic.id} showLink={true} />
-            )
-        }
-    </>
-  )
+    return (
+        <>
+            <Table headers={['id', 'name', 'status', 'email']} dataArr={clinicList}  type='clinics' />
+        </>
+    )
 }
 
 export default Clinics

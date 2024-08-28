@@ -38,7 +38,17 @@ const OrderList = () => {
         .then(result => {
             if(result.status === "success") {
                 setLoading(false);
-                dispatch(setOrderList(result?.data?.rows || []));
+                const orders = [];
+                result?.data?.rows.map(order => {
+                    orders.push({
+                        id: order.id,
+                        orderNumber: order.orderNumber,
+                        status: order.status,
+                        patientName: `${order.patient.name} ${order.patient.surname}`,
+                        patientEmail: `${order.patient.email}`
+                    });
+                });
+                dispatch(setOrderList(orders || []));
                 return ;
             }
         })

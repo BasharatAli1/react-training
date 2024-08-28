@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import OrderDetail from '../details/orderDetail';
 import { useSelector } from 'react-redux';
+import Table from '../../table/Table';
 
 const Orders = () => {
     const orderList = useSelector(state => state.orders.orderList);
     return (
         <>
-            {
-                orderList.map((order)=> {
-                    return <OrderDetail order={order} key={order.id} showLink={true} />
-                })
-            }
+            <Table headers={['orderNumber', 'status', 'patientName', 'patientEmail']} dataArr={orderList} type='orders' />
         </>
     )
 }
