@@ -8,7 +8,7 @@ const Patients = () => {
   return (
     <>
         {
-            <Table headers={['id', 'name', 'surname', 'email']} dataArr={patientList}  type='patients' />
+            <Table headers={['id', 'name', 'surname', 'email', 'gender', 'dob']} dataArr={patientList}  type='patients' />
         }
     </>
   )

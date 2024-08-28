@@ -6,7 +6,7 @@ const Clinics = () => {
     const clinicList = useSelector(state => state.clinics.clinicList)
     return (
         <>
-            <Table headers={['id', 'name', 'status', 'email']} dataArr={clinicList}  type='clinics' />
+            <Table headers={['id', 'name', 'status', 'email', 'phone']} dataArr={clinicList}  type='clinics' />
         </>
     )
 }

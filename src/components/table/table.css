@@ -1,0 +1,20 @@
+.table-container {
+    /* border: 1px solid red; */
+    margin: auto;
+    width: 100%;
+}
+
+.table-header {
+    /* display: flex;
+    flex-direction: column; */
+    border-bottom: 5px solid red;
+}
+
+th{
+    background-color: #cecccc;
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #eeebeb;
+  }

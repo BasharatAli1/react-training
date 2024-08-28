@@ -36,7 +36,17 @@ const ClinicListing = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        dispatch(setClinicList(result?.data?.rows || []));
+                        const clinics = [];
+                        result?.data?.rows.map(clinic => {
+                            clinics.push({
+                                id: clinic.id,
+                                name: clinic.name,
+                                status: clinic.status,
+                                phone: `${clinic.clinicDetails.contact}`,
+                                email: `${clinic.email}`
+                            });
+                        });
+                        dispatch(setClinicList(clinics || []));
                         return ;
                     }
                 })

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { ORDER_STATUS, TABLE_FIELDS } from '../../utils/constants';
+import { GENDER, ORDER_STATUS, TABLE_FIELDS } from '../../utils/constants';
+import './table.css'
 
 const Table = ({ headers, dataArr, type }) => {
     const switchCase = (header, dataValue, id) => {
@@ -9,11 +10,14 @@ const Table = ({ headers, dataArr, type }) => {
         const linkValue = type === 'clinics' ? 'name' : type === 'orders' ? 'orderNumber' : 'id';
         switch (header) {
             case linkValue:
-                return <Link to={link}>
+                return <Link style={{fontSize:'11px'}} to={link}>
                     <h2>{dataValue}</h2>
                 </Link>
             case 'status':
                 value = ORDER_STATUS[dataValue];
+                break
+            case 'gender':
+                value = GENDER[dataValue];
                 break
             default:
                 value = dataValue
@@ -23,11 +27,10 @@ const Table = ({ headers, dataArr, type }) => {
     }
     return (
         <div>
-            <h1>TABLE</h1>
-            <table>
+            <table className='table-container'>
                 {
                     headers.length && (
-                    <thead>
+                    <thead className='table-header'>
                         <tr>
                             {headers.map((header) => {
                                 return <th key={header}>
@@ -39,7 +42,7 @@ const Table = ({ headers, dataArr, type }) => {
                 )}
                 {
                     dataArr && 
-                    <tbody>
+                    <tbody className='table-body'>
                         {dataArr.map((data, index) => (
                             <tr key={index}>
                                 {
