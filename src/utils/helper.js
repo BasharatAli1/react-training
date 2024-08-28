@@ -7,3 +7,7 @@ export const setAccessToken = (token) => {
 export const getAccessToken = () => {
     return cookies.get('accessToken');
 }
+
+export const eraseAccessToken = () => {
+    cookies.erase('accessToken')
+}

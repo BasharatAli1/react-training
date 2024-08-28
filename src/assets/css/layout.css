@@ -1,17 +1,30 @@
 .nav-bar {
     display: flex;
-    padding: 16px;
+    padding: 16px 22px;
     justify-content: space-between;
     align-items: center;
     /* border: 1px solid black; */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
+.nav-links {
+    display: flex;
+    align-items: center;
+    padding: auto;
+}
+
+.nav-logout {
+    margin-left: auto;
+}
+
 .nav-bar-link {
+    display: flex;
+    align-items: center;
     color: black;
     text-decoration: none;
-    font-size: 22px;
-    margin-right: 20px;
+    font-size: 20px;
+    margin-right: 26px;
+    align-items: center;
 }
 
 .logout-button {
@@ -22,4 +35,5 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
+    font-size: 15px;
 }
