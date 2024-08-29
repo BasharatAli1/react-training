@@ -82,7 +82,7 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
     }
     return (
         <>
-            {!showAddClinicModal && <button className='info-button' onClick={() => setShowAddClinicModal(true)}>Add Clinic</button>}
+            <button className='info-button' onClick={() => setShowAddClinicModal(true)}>Add Clinic</button>
             <Dialog
                 title='Add Clinic'
                 onSubmit={handleFormSubmit}

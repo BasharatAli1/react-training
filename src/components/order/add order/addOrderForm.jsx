@@ -228,7 +228,7 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
 
     return (
         <>
-            {!showAddOrderModal && <button className='info-button' onClick={() => setShowAddOrderModal(true)}>Add Order</button>}
+            <button className='info-button' onClick={() => setShowAddOrderModal(true)}>Add Order</button>
             <Dialog
                 title='Add Order'
                 onSubmit={handleFormSubmit}

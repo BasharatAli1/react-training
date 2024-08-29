@@ -110,7 +110,7 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
     }
     return (
         <>
-            {!showAddPatientModal && <button className='info-button' onClick={() => setShowAddPatientModal(true)}>Add Patient</button>}
+            <button className='info-button' onClick={() => setShowAddPatientModal(true)}>Add Patient</button>
             <Dialog
                 title='Add Patient'
                 onSubmit={handleFormSubmit}
