@@ -11,10 +11,10 @@
 }
 
 th{
-    background-color: #cecccc;
+    background-color: #a5a2a2;
     padding: 10px;
 }
 
 tr:nth-child(even) {
-    background-color: #eeebeb;
+    background-color: #f1f1f1;
   }
