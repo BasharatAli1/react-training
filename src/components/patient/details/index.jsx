@@ -21,7 +21,17 @@ const Detail = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setPatient(result.data);
+                        const patient = {
+                            id: result.data.id,
+                            status: result.data.status,
+                            name: result.data.name,
+                            lastName: result.data.surname,
+                            email: result.data.email,
+                            address1: result.data.address1,
+                            city: result.data.city,
+                            zipCode: result.data.zipCode,
+                        };
+                        setPatient(patient || {});
                         return ;
                     }
                 })

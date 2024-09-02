@@ -7,7 +7,7 @@ const Detail = () => {
     const params = useParams();
     const [clinic, setClinic] = useState([{}]);
     const [loading, setLoading] = useState(true);
-    const getClinics = () => {
+    const getClinic = () => {
         const url = `http://127.0.0.0:3001/api/clinics/dashboard/${params.id}`;
         const accessToken = getAccessToken();
         const requestBody = {
@@ -33,7 +33,14 @@ const Detail = () => {
                 .then(result => {
                     if(result.status === "success") {
                         setLoading(false);
-                        setClinic(result.data.clinic);
+                        const clinic = {
+                            name: result.data.clinic.name,
+                            email: result.data.clinic.email,
+                            address1: result.data.clinic.clinicDetails.address1,
+                            city: result.data.clinic.clinicDetails.city,
+                            zipCode: result.data.clinic.clinicDetails.zipCode,
+                        }
+                        setClinic(clinic || {});
                         return ;
                     }
                 })
@@ -45,7 +52,7 @@ const Detail = () => {
         }
     }
     useEffect(() => {
-        getClinics();
+        getClinic();
     }, [])
   return (
     <>

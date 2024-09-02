@@ -45,6 +45,7 @@ const OrderList = () => {
                         orderNumber: order.orderNumber,
                         status: order.status,
                         patientName: `${order.patient.name} ${order.patient.surname}`,
+                        clinicName: order.clinic.name,
                         patientEmail: `${order.patient.email}`
                     });
                 });

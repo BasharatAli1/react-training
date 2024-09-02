@@ -1,11 +1,11 @@
+import Card from "../../card/Card";
+
 const ClinicDetail = ({ clinic }) => {
     return (
         <>
-            {
-                <h2>{clinic.id}</h2>
-            }
+            <Card heading={clinic.name} data={clinic} />
         </>
-    )
-}
+    );
+};
 
-export default ClinicDetail
+export default ClinicDetail;

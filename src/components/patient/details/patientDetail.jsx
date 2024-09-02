@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom';
+import Card from '../../card/Card';
 
-const PatientDetail = ({ patient, showLink = false }) => {
+const PatientDetail = ({ patient }) => {
+    console.log('PATIENT', patient);
+    
+    const patientName = `${patient.name || ''} ${patient.lastName || ''}`;
     return (
         <>
-            {
-                showLink ?
-                <Link to={`/patient/${patient.id}`}> 
-                    <h2>{patient.id} - {patient.name} {patient.surname}</h2>
-                </Link> :
-                <h2>{patient.id}</h2>
-            }
+            <Card heading={patientName} data={patient} />
         </>
     )
 }

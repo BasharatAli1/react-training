@@ -84,6 +84,7 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
                 setLoading(false);
                 return ;
             } else {
+                setLoading(false);
                 const errMsg = result?.inner?.message?.message || result?.inner?.message || result?.message?.message || result?.message|| result?.name;
                 setResponseMessage(`Error: ${errMsg}`);
                 return ;
@@ -193,7 +194,7 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
                     <br />
                     <label className="dialog-label" htmlFor="">Phone #
                         <input
-                            type="text"
+                            type="number"
                             placeholder='Enter Phone'
                             ref={phoneRef}
                             className="dialog-input-field"

@@ -148,6 +148,7 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
                 setShowAddOrderModal(false);
                 return ;
             } else {
+                setLoading(false);
                 const errMsg = result?.inner?.message?.message || result?.inner?.message || result?.message?.message || result?.message|| result?.name;
                 setResponseMessage(`Error: ${errMsg}`);
                 return ;
@@ -346,7 +347,7 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
                     <br />
                     <label className="dialog-label" htmlFor="">Quantity
                         <input
-                            type="text"
+                            type="number"
                             placeholder='Enter Quantity'
                             disabled={selectedMedicine?false:true}
                             onChange={handleMedicineQty}

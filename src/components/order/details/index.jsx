@@ -23,7 +23,18 @@ const Detail = () => {
             }).then(response => response.json())
                 .then(result => {
                     if(result.status === "success") {
-                        setOrder(result.data);
+                        const order = {
+                            id: result.data.id,
+                            orderNumber: result.data.orderNumber,
+                            clinicName: result.data.clinic.name,
+                            status: result.data.status,
+                            patientName: `${result.data.patient.name} ${result.data.patient.surname}`,
+                            patientEmail: `${result.data.patient.email}`,
+                            address1: result.data.shippingAddress.address1,
+                            city: result.data.shippingAddress.city,
+                            zipCode: result.data.shippingAddress.zipCode,
+                        };
+                        setOrder(order);
                         setLoading(false);
                         return ;
                     }
