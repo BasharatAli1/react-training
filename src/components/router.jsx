@@ -3,10 +3,10 @@ import Layout from "./layout/Layout";
 import Login from "./login/Login";
 import Home from "./Home";
 import OrderList from "./order/listing";
-import OrderDetail from './order/details';
-import ClinicDetail from './clinic/details';
+import OrderDetail from './order/details/orderDetail';
+import ClinicDetail from './clinic/details/clinicDetail';
 import ClinicListing from "./clinic/listing";
-import PatientDetail from './patient/details';
+import PatientDetail from './patient/details/patientDetail';
 import PatientListing from "./patient/listing";
 import ProtectedRoute from "./ProtectedRoute";
 

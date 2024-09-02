@@ -116,7 +116,7 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
                     </label>
                     <label className="dialog-label" htmlFor="">Contact #
                         <input
-                            type="text"
+                            type="number"
                             placeholder='Enter Contact'
                             ref={contactRef}
                             className="dialog-input-field"
