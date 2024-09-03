@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import OrderDetail from '../details/orderDetail';
 import Orders from './orders';
 import { connect, useDispatch } from 'react-redux';
 import { setOrderList } from '../../../slices/order';
