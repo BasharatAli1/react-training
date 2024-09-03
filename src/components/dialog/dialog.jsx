@@ -20,13 +20,15 @@ const Dialog = ({ title, children, onSubmit, hasCloseBtn = true, hasSubmitBtn = 
     return (
         <>
             {isOpen && <div className="dialog-overlay"></div>}
-            <dialog style={{ border: 'none' }} open={isOpen}>
+            <dialog className="dialog-container" style={{ border: 'none' }} open={isOpen}>
                 <h1>{title}</h1>
 
                 {hasCloseBtn && <button onClick={onClose} className="close-button">Close</button>}
                 <br/>
                 <br/>
-                {children}
+                <div className="dialog-content">
+                    {children}
+                </div>
                 <br/>
                 {hasSubmitBtn && <button type="submit" onClick={onSubmit} className="submit-button">Submit</button>}
             </dialog>
