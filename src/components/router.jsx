@@ -10,7 +10,6 @@ import PatientDetail from './patient/details/patientDetail';
 import PatientListing from "./patient/listing";
 import ProtectedRoute from "./ProtectedRoute";
 
-
 const routes = createRoutesFromElements(
     <Route path="/" element={<Layout />} >
         <Route index element={
