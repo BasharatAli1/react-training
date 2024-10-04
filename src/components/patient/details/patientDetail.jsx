@@ -2,45 +2,36 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { getAccessToken } from '../../../utils/helper';
 import Card from '../../card/Card';
+import { API } from '../../../axios';
 
 const PatientDetail = () => {
     const params = useParams();
     const [patient, setPatient] = useState([{}]);
     const [loading, setLoading] = useState(true);
     const patientName = patient ? `${patient.name || ''} ${patient.lastName || ''}` : '';
-    const getPatients = () => {
-        const url = `http://127.0.0.0:3001/api/patients/${params.id}`;
-        const accessToken = getAccessToken();
+    const getPatients = async () => {
         try {
-            fetch(url, {
-                method: 'get',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': accessToken
-                },
-            }).then(response => response.json())
-                .then(result => {
-                    if(result.status === "success") {
-                        setLoading(false);
-                        const patient = {
-                            id: result.data.id,
-                            status: result.data.status,
-                            name: result.data.name,
-                            lastName: result.data.surname,
-                            email: result.data.email,
-                            address1: result.data.address1,
-                            city: result.data.city,
-                            zipCode: result.data.zipCode,
-                        };
-                        setPatient(patient || {});
-                        return ;
-                    }
-                })
-                .catch(error => console.log('error', error));
+            const result = await API.get(
+                `patients/${params.id}`
+            );
+            if(result.data.status === "success") {
+                setLoading(false);
+                const patient = {
+                    id: result.data.data.id,
+                    status: result.data.data.status,
+                    name: result.data.data.name,
+                    lastName: result.data.data.surname,
+                    email: result.data.data.email,
+                    address1: result.data.data.address1,
+                    city: result.data.data.city,
+                    zipCode: result.data.data.zipCode,
+                };
+                setPatient(patient || {});
+                return ;
+            }
             return [];
         } catch (error) {
-            console.log('333', error.message);
-            // handle network error
+            console.log('getPatients', error.message);
         }
     }
     useEffect(() => {

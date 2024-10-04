@@ -26,7 +26,7 @@ const Card = ({ heading, data }) => {
         },
         card: {
             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
-            padding: '16px',
+            // padding: '16px',
             textAlign: 'left',
             padding: '50px',
             paddingLeft: '100px',

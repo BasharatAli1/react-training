@@ -3,7 +3,8 @@ import { setAccessToken } from '../../utils/helper';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../slices/auth';
 import { useNavigate } from 'react-router-dom';
-import './login.css'
+import './login.css';
+import { API } from '../../axios';
 
 const Login = () => {
     const [email, setEmail] = useState("basharat@camp1.tkxel.com");
@@ -43,30 +44,24 @@ const Login = () => {
             handleLogin();
         }
     }
-    const handleLogin = () => {
-        const url = 'http://127.0.0.0:3001/api/auth/login';
+    const handleLogin = async () => {
+        try {
+            const requestBody = {
+              deviceToken: '',
+              email,
+              password,
+            };
         
-        const requestBody = {
-          deviceToken: '',
-          email,
-          password,
-        };
-    
-        setAccessToken('');
+            setAccessToken('');
+            const result = await API.post(
+                '/auth/login',
+                requestBody
+            );
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        })
-        .then(result => result.json())
-        .then(result => {
-            if(result.status === "success") {
+            if(result.data.status === "success") {
                 setResponseMessage('Login Successful!');
                 handleLoginResponse(true);
-                setAccessToken(result.data.access);
+                setAccessToken(result.data.data.access);
                 dispatch(setAuth(true));
                 navigate('/order');
                 return ;
@@ -78,12 +73,13 @@ const Login = () => {
                 dispatch(setAuth(false));
                 return ;
             }
-        })
-        .catch(error => {
+
+        } catch (err) {
+            console.log('Login Err :::', err);
             handleLoginResponse(false);
             dispatch(setAuth(false));
-            setResponseMessage(`Login failed: ${data?.message?.message}`);
-        });
+            setResponseMessage(`Login Failed: ${err.response.data?.message}`);
+        }
     };
 
     const dispatch = useDispatch();

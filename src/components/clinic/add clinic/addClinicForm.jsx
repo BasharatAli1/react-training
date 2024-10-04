@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
 import { getAccessToken } from '../../../utils/helper';
 import '../../../assets/css/dialog.css';
+import { API } from '../../../axios';
 
 const AddClinicForm = ({ getClinics, setLoading }) => {
     const nameRef = useRef();
@@ -48,28 +49,19 @@ const AddClinicForm = ({ getClinics, setLoading }) => {
         setShowAddClinicModal(false);
     }
 
-    const addClinic = (clinicData) => {
-        const url = `http://127.0.0.0:3001/api/clinics`;
+    const addClinic = async (clinicData) => {
         const requestBody = clinicData;
-        const accessToken = getAccessToken();
         setLoading(true);
         try {
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': accessToken
-                },
-                body: JSON.stringify(requestBody),
-            }).then(response => response.json())
-                .then(result => {
-                    if(result.status === "success") {
-                        getClinics();
-                        setLoading(true);
-                        return ;
-                    }
-                })
-                .catch(error => console.log('error', error));
+            const result = await API.post(
+                '/clinics',
+                requestBody
+            )
+            if(result.data.status === "success") {
+                getClinics();
+                setLoading(true);
+                return ;
+            }
             return [];
         } catch (error) {
             setLoading(false);

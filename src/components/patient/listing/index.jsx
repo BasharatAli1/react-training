@@ -4,13 +4,12 @@ import { useDispatch } from 'react-redux';
 import { setPatientList } from '../../../slices/patient';
 import AddPatientForm from '../add patient/addPatientForm';
 import { getAccessToken } from '../../../utils/helper';
+import { API } from '../../../axios';
 
 const PatientListing = () => {
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
-    const getPatients = () => {
-        const url = 'http://127.0.0.0:3001/api/patients/list';
-        const accessToken = getAccessToken();
+    const getPatients = async () => {
         const requestBody = {
             filters: {
                 query: ""
@@ -20,26 +19,20 @@ const PatientListing = () => {
                 perPage: 10
             }
         };
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': accessToken
-            },
-            body: JSON.stringify(requestBody),
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.status === "success") {
+        try {
+            const result = await API.post(
+                'patients/list',
+                requestBody
+            );
+            if (result.data.status === "success") {
                 setLoading(false);
-                dispatch(setPatientList(result?.data?.rows || []));
+                dispatch(setPatientList(result.data?.data?.rows || []));
                 return;
             }
-        })
-        .catch(error => {
+        } catch (err) {
             setLoading(false);
-            console.log('Get Patients Err:::', error.message);
-        });
+            console.log('Get Patients Err:::', err.message);
+        }
         return [];
     }
     useEffect(() => {

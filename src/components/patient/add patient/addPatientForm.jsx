@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
 import { getAccessToken } from '../../../utils/helper';
+import { API } from '../../../axios';
 
 const AddPatientForm = ({ getPatients, setLoading }) => {
     const nameRef = useRef();
@@ -63,37 +64,29 @@ const AddPatientForm = ({ getPatients, setLoading }) => {
         addPatient(patientDataObj);
     }
 
-    const addPatient = (patientData) => {
-        const url = `http://127.0.0.0:3001/api/patients`;
+    const addPatient = async (patientData) => {
         const requestBody = patientData;
-        const accessToken = getAccessToken();
         setLoading(true);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': accessToken
-            },
-            body: JSON.stringify(requestBody),
-        })
-        .then(response => response.json())
-        .then(result => {
-            if(result.status === "success") {
+        try {
+            const result = await API.post(
+                'patients',
+                requestBody
+            );
+            console.log('result.data.status', result.data.status);
+            
+            if(result.data.status === "success") {
                 setShowAddPatientModal(false);
                 getPatients();
                 setLoading(false);
                 return ;
-            } else {
-                setLoading(false);
-                const errMsg = result?.inner?.message?.message || result?.inner?.message || result?.message?.message || result?.message|| result?.name;
-                setResponseMessage(`Error: ${errMsg}`);
-                return ;
             }
-        })
-        .catch(error => {
-            setLoading(false);
-            console.log('addPatient Err :::', error.message);
-        });
+        } catch (err) {
+                setLoading(false);
+                console.log('addPatient Err :::', err);
+                setResponseMessage(`Error: ${err.response.data?.message}`);
+                return ;
+            
+        }
         return [];
     }
     // const handleInputChange = (event) => {
