@@ -3,7 +3,6 @@ import Patients from './patients';
 import { useDispatch } from 'react-redux';
 import { setPatientList } from '../../../slices/patient';
 import AddPatientForm from '../add patient/addPatientForm';
-import { getAccessToken } from '../../../utils/helper';
 import { API } from '../../../axios';
 
 const PatientListing = () => {

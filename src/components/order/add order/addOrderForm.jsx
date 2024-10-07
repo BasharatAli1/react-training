@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Dialog from '../../dialog/dialog';
 import { getAccessToken } from '../../../utils/helper';
 import { API } from '../../../axios';

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
-import { getAccessToken } from '../../../utils/helper';
 import '../../../assets/css/dialog.css';
 import { API } from '../../../axios';
 

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Orders from './orders';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setOrderList } from '../../../slices/order';
 import AddOrderForm from '../add order/addOrderForm';
-import { getAccessToken } from '../../../utils/helper';
 import { API } from '../../../axios';
 
 const OrderList = () => {

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import Dialog from '../../dialog/dialog';
-import { getAccessToken } from '../../../utils/helper';
 import { API } from '../../../axios';
 
 const AddPatientForm = ({ getPatients, setLoading }) => {

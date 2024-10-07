@@ -3,7 +3,6 @@ import Clinics from './clinics';
 import { useDispatch } from 'react-redux';
 import { setClinicList } from '../../../slices/clinic';
 import AddClinicForm from '../add clinic/addClinicForm';
-import { getAccessToken } from '../../../utils/helper';
 import { API } from '../../../axios';
 
 const ClinicListing = () => {
