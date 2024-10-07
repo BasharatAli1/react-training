@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Dialog from '../../dialog/dialog';
 import { getAccessToken } from '../../../utils/helper';
+import { API } from '../../../axios';
 
 const AddOrderForm = ({ getOrders, setLoading }) => {
     const [patientList, setPatientList] = useState([]);
@@ -127,42 +128,31 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
         addOrder(orderDataObj);
     }
 
-    const addOrder = (payload) => {
-        const url = `http://127.0.0.0:3001/api/orders`;
+    const addOrder = async (payload) => {
         const requestPayload = payload;
-        const accessToken = getAccessToken();
         setLoading(true);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': accessToken
-            },
-            body: JSON.stringify(requestPayload),
-        })
-        .then(response => response.json())
-        .then(result => {
-            if(result.status === "success") {
+        try {
+            const result = await API.post(
+                '/orders',
+                requestPayload
+            );
+            console.log('result.data.status :::', result.data.status);
+            
+            if(result.data.status === "success") {
                 getOrders();
                 setLoading(false);
                 setShowAddOrderModal(false);
                 return ;
-            } else {
-                setLoading(false);
-                const errMsg = result?.inner?.message?.message || result?.inner?.message || result?.message?.message || result?.message|| result?.name;
-                setResponseMessage(`Error: ${errMsg}`);
                 return ;
             }
-        })
-        .catch(error => {
+            return [];
+        } catch(err) {
             setLoading(false);
-            console.log('addOrder Err :::', error.message);
-        });
-        return [];
+            console.log('addOrder Err :::', err.message);
+        }
     }
 
-    const shortApiCall = (endPoint, query, type) => {
-        const url = 'http://127.0.0.0:3001/api/' + endPoint;
+    const shortApiCall = async (endPoint, query, type) => {
         const reqBody = type === 'patient' ? { filters: {
                 query
             } } : type === 'clinic' ? { filters: {
@@ -173,29 +163,24 @@ const AddOrderForm = ({ getOrders, setLoading }) => {
                 query,
                 type: "prescriber"
             } };
-        const accessToken = getAccessToken();
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': accessToken
-            },
-            body: JSON.stringify(reqBody),
-        })
-        .then(response => response.json())
-        .then(result => {
-            if(result.status === "success") {
+        try {
+            const result = await API.post(
+                `/${endPoint}`,
+                reqBody
+            );
+            if(result.data.status === "success") {
                 if(type === 'patient') {
-                    setPatientList(result?.data?.rows || []);
+                    setPatientList(result.data?.data?.rows || []);
                 } else if(type === 'clinic') {
-                    setClinicList(result?.data?.rows || []);
+                    setClinicList(result.data?.data?.rows || []);
                 } else {
-                    setDoctorList(result?.data?.rows || []);
+                    setDoctorList(result.data?.data?.rows || []);
                 }
                 return ;
             }
-        })
-        .catch(error => console.log('error', error));
+        } catch(err) {
+            console.log('shortApiCall :::', err);
+        }
         return [];
     }
 

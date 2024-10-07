@@ -4,14 +4,13 @@ import { connect, useDispatch } from 'react-redux';
 import { setOrderList } from '../../../slices/order';
 import AddOrderForm from '../add order/addOrderForm';
 import { getAccessToken } from '../../../utils/helper';
+import { API } from '../../../axios';
 
 const OrderList = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     
-    const getOrders = () => {
-        const url = 'http://127.0.0.0:3001/api/payment-link/list';
-        const accessToken = getAccessToken();
+    const getOrders = async () => {
         const requestBody = {
             filters: {
                 clinicId :  null,
@@ -25,20 +24,15 @@ const OrderList = () => {
                 perPage: 10
             }
         };
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': accessToken
-            },
-            body: JSON.stringify(requestBody),
-        })
-        .then(response => response.json())
-        .then(result => {
-            if(result.status === "success") {
+        try {
+            const result = await API.post(
+                '/payment-link/list',
+                requestBody
+            );
+            if(result.data.status === "success") {
                 setLoading(false);
                 const orders = [];
-                result?.data?.rows.map(order => {
+                result.data?.data?.rows.map(order => {
                     orders.push({
                         id: order.id,
                         orderNumber: order.orderNumber,
@@ -51,9 +45,10 @@ const OrderList = () => {
                 dispatch(setOrderList(orders || []));
                 return ;
             }
-        })
-        .catch(error => console.log('error order list', error));
-        return [];
+            return [];
+        } catch(err) {
+            console.log('getOrders :::', err);
+        }
     };
 
     useEffect(() => {
