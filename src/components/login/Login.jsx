@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { setAccessToken } from '../../utils/helper';
+import { setAccessToken, setRefreshToken } from '../../utils/helper';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../slices/auth';
 import { useNavigate } from 'react-router-dom';
@@ -53,15 +53,18 @@ const Login = () => {
             };
         
             setAccessToken('');
+            setRefreshToken('');
             const result = await API.post(
                 '/auth/login',
                 requestBody
             );
+            console.log('result.data.data.refresh ::', result.data.data.refresh);
 
             if(result.data.status === "success") {
                 setResponseMessage('Login Successful!');
                 handleLoginResponse(true);
                 setAccessToken(result.data.data.access);
+                setRefreshToken(result.data.data.refresh);
                 dispatch(setAuth(true));
                 navigate('/order');
                 return ;
@@ -70,6 +73,7 @@ const Login = () => {
                 setResponseMessage(`Login Failed: ${errMsg}`);
                 handleLoginResponse(false);
                 setAccessToken('');
+                setRefreshToken('');
                 dispatch(setAuth(false));
                 return ;
             }

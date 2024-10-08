@@ -9,5 +9,17 @@ export const getAccessToken = () => {
 }
 
 export const eraseAccessToken = () => {
-    cookies.erase('accessToken')
+    cookies.erase('accessToken');
+}
+
+export const setRefreshToken = (token) => {
+    cookies.set('refreshToken', token, { expires: 365 });
+}
+
+export const getRefreshToken = () => {
+    return cookies.get('refreshToken');
+}
+
+export const eraseRefreshToken = () => {
+    cookies.erase('refreshToken');
 }
